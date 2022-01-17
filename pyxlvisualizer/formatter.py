@@ -1,8 +1,7 @@
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 
-class Formatter():
-    
+class Formatter:
     def __init__(self, keys=None, colors=None):
         if colors is None:
             colors = ['C0000000', 'C0FF0000', 'C000FF00', 'C00000FF']

@@ -1,7 +1,3 @@
-from array import ArrayType
-from multiprocessing.dummy import Array
-
-
 class Color:
     '''
     Takes an array[r,g,b,a] (r,g,b=(0-255) a=(0.0-1.0))

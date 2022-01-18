@@ -11,12 +11,16 @@ class Color:
         HEX_CONVERSION = ['0', '1', '2', '3', '4', '5', '6', '7',
                           '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
     
-    def convert_to_ARGB(self, rgba=None):
+    def get_rgba(self):
         '''
-        Takes self or an optional array[r,g,b,a] (r,g,b=(0-255) a=(0.0-1.0))
-        Returns String 'AARRGGBB'
+        Returns rgba as String: '(r,g,b,a)'
         '''
-        
+        return f'({self.rgba[0]}{self.rgba[1]}{self.rgba[2]}{self.rgba[3]})'
+
+    def get_argb_hex(self, rgba=None):
+        '''
+        Returns argb hex as String: 'AARRGGBB'
+        '''
         #TODO: add catch/throws(?) for wrong size array 
         if rgba is None:
             ov = self.rgba

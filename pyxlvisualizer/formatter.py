@@ -1,10 +1,14 @@
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
+from .color import Color
 
 class Formatter:
     def __init__(self, keys=None, colors=None):
         if colors is None:
-            colors = ['C0000000', 'C0FF0000', 'C000FF00', 'C00000FF']
+            colors = [Color([255, 255, 255, 0.5]).get_argb_hex(),
+                      Color([0, 255, 255, 0.5]).get_argb_hex(),
+                      Color([255, 0, 255, 0.5]).get_argb_hex(),
+                      Color([255, 255, 0, 0.5]).get_argb_hex()]
         if keys is None:    
             keys = ['A', 'B', 'C', 'D']
             
@@ -31,6 +35,10 @@ class Formatter:
     # TODO: Adjust file_loc/file_name to make renaming of file smoother
     # TODO: Add functionality for changing fill type
     def format_spreadsheet(self, file_loc: str, new_sheet_name: str=None, cell_columns=None):
+        '''
+        Takes file location and optional variables for new sheet name and cell columns
+        Uses new sheet and cell columns to format coloring with self.colors based off self.keys
+        '''
         if cell_columns is None:
             cell_columns = ['A', 'B', 'C']
         if new_sheet_name is None:
@@ -44,9 +52,16 @@ class Formatter:
             # get the value of first column @ current row (counter)
             current_person = ws[f'A{counter}'].internal_value
             #print(color_codes[current_person])
-            for i in range(len(cell_columns)):
+            for i,_ in enumerate(cell_columns):
                 ws[f'{cell_columns[i]}{counter}'].fill = PatternFill(fill_type='lightUp', fgColor=self.colors[current_person])
             counter += 1
         ws.title = new_sheet_name
         wb.save(filename=f'NEW-{file_loc}')
 
+    def __repr__(self):
+        these_keys = ''
+        for key in self.colors:
+            these_keys += f'{key}:{self.colors[key]},'
+            
+        return these_keys
+        
